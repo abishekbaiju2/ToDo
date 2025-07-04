@@ -1,0 +1,297 @@
+# ================  BACKEND  ==========
+
+
+
+#  STEP 1  -->  Environment Setup
+
+# *	create a virtual environment
+# *	venv is activated
+# *	installed Django pillow setuptools djangorestframework djangorestframework-simplejwt
+# *	created Django project todobackend
+# *	app is created Api
+# *	introduce in settings intalled apps ==> 'rest_framework', 'rest_framework_simplejwt', 'Api'
+
+#-------------------------------------------------------------------------------------------------------------------------------------------
+
+# STEP 2 --> user model creation
+
+# *	in Api.models imported AbstractUser
+# *	set the email unique
+# *	introduce in settings ==> AUTH_USER_MODEL = 'Api.CustomUser' 
+# 	--> Api → is your Django app name.
+# 	    CustomUser → is your custom user model class name that extends AbstractUser
+# 	    By default, Django uses django.contrib.auth.models.User.But when you define your own user model (to add fields or customize behavior), you must tell Django to use it:
+# *	def __str__(self):
+#     		return self.username
+#    --> when you print it or view it in the Django admin panel or shell.
+# craete serializer for user
+ 
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+# STEP 3 --> email otp verification
+
+# * created emailotp model
+# * created serializer  for user
+#  -> extra_kwargs = {'password': {'write_only': True}}
+#  -> on Dango Resr Framework -> when using serializer -> inside Meta cls -> using API it wont return the password  value
+#  **serializer.validated_data
+#  -> now that contain cleaned input
+#  user.is_active = False
+#  -> by default , Django set user.is_active = True ,so the users can login but False then cann't login yet
+# Response -> HTTP response back to frondend
+#  status -> provide Http status code 
+
+
+#  def validate_email(self, value):
+            # if CustomUser.objects.filter(email=value).exists():
+                # raise serializers.ValidationError("Email already registered.")
+            # return value 
+# -> When you define a method like validate_email() inside a serializer, Django REST Framework (DRF) automatically calls it during the .is_valid() process, based on the field name
+# Loops through each field in fields.
+# For each field (email), it checks:
+# If a method called validate_email() exists.
+# If it exists, it calls:
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+#  STEP 4 --> otp verification
+
+#  getting email and otp from frondend
+#  check the variable email and otp is empty or not
+#  then fetch user and emailotp
+#  set user.is_active = True
+#  delete emailotp
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+# STEP 5 --> resendotp
+
+# getting email from frondend
+# check the variable email is empty or not
+# then generate otp
+# replace it in emailotp model
+# created exception for error
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+# STEP 6 --> JWT login
+
+# getting email and password from the frondend
+#  check the variable email and password is empty or not 
+# fetch the user
+# check the user is active or not
+# authenticate
+# jwt token creation
+# If login is successful:
+# refresh: A long-lived token (used to get new access tokens).
+# access: A short-lived token (used to access protected endpoints).
+# created exception for error
+
+# token is not stored in django db
+# The token is returned to the frontend (client) via the API response.
+# It is usually stored on the client-side, such as:
+# In the browser's localStorage or sessionStorage
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+# Step 7 --> JWT Authentication Setup in Django Project
+
+# intoduce in settings 
+# REST_FRAMEWORK = {
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+    # )
+# }
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+# STEP 8 --> forget password otp
+
+# created a model for forget password otp 
+# craete a serializer for forget password otp
+# email = serializers.EmailField()
+# -> it ensure ->The input is a string ->The input matches email format (like abc@domain.com)
+# def validate_email(self, value):
+# -> check email is existing or not
+
+# created view for forget password otp
+# email = serializer.validated_data['email']
+# --> my_dict['key'] → works
+# PasswordResetOtp.objects.update_or_create(
+    # user=user, 
+    # defaults={
+        # 'otp': otp,
+        # 'created_at': timezone.now()
+    # }
+# )
+# The defaults dictionary is required to specify which fields should be updated or used for creation, apart from the fields used for lookup.
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+# STEP 9 -> otp verify and reset password
+
+# created a serializer for resetpassword
+# new_password = serializers.CharField(write_only=True, min_length=8)
+# -> A minimum of 8 characters helps ensure the password is complex enough to resist simple attacks.
+# created view for reset password
+# check that is email and otp and new password (min length should be 6)
+# fecth user and otp model
+# check otp is expired or not .  if expired delete otp
+# check otp is equal to otp from the model
+# set new password to user
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+# STEP 10 --> logout
+
+# -> introduce in settings  -> installed apps
+# 'rest_framework_simplejwt.token_blacklist',
+# The 'rest_framework_simplejwt.token_blacklist' is an optional app provided by the SimpleJWT package that allows you to blacklist (invalidate) refresh tokens after logout.
+
+# created a view for logout 
+# from rest_framework.permissions import IsAuthenticated
+# -> When you apply IsAuthenticated to a view or viewset, it only allows access if the request includes valid authentication credentials (like a JWT token or session).
+# from rest_framework_simplejwt.tokens import RefreshToken, TokenError
+# TokenError --> a built-in exception class from SimpleJWT that is raised when there is a problem with a token. Makes sure logout or token verification is safe and secure.
+
+# RefreshToken(refresh_token) 
+# -> You're taking the refresh token string (which comes from the client, usually via a POST request), and converting it into a RefreshToken object provided by SimpleJWT.
+
+# token.blacklist() 
+# -> It invalidates (blocks) the refresh token so it can’t be used again.
+# HTTP_205_RESET_CONTENT
+# -> tells -> The user is logged out. Clear any tokens or input fields on the client side.
+
+# After a user logs out and their refresh token is blacklisted, they can log in again just like before by entering their email and password; the backend will authenticate them and issue new access and refresh tokens, while the old blacklisted token remains invalid and unusable.
+
+# In JWT (like used in Django SimpleJWT), each token has a built-in expiry time.
+# Access Token: Short-Lived (Usually 5 minutes)
+# Refresh Token: Long-Lived (Usually 1 to 14 days) 
+
+
+#  introduce to settings
+# -> from datetime import timedelta
+# SIMPLE_JWT = {
+    # 'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),  
+    # 'REFRESH_TOKEN_LIFETIME': timedelta(days=7),     
+    # 'ROTATE_REFRESH_TOKENS': True,
+    # 'BLACKLIST_AFTER_ROTATION': True,
+    # 'AUTH_HEADER_TYPES': ('Bearer',),
+# }
+# ACCESS_TOKEN_LIFETIME: Shorter lifetimes improve security. 15 minutes is common.
+# REFRESH_TOKEN_LIFETIME: Longer, so users don't have to log in again too soon.
+# ROTATE_REFRESH_TOKENS = True: Every time you use a refresh token, you'll get a new one.
+# BLACKLIST_AFTER_ROTATION = True: Ensures the old refresh token becomes unusable.
+# AUTH_HEADER_TYPES = ('Bearer',): This is standard; tells your API to expect Authorization: Bearer <token>.
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+# Step 11 -> todo task create list
+
+# created a todo model
+# created a serializer for the todo model
+# created a view for the todo model
+
+# get function
+# serializer = TodoSerializer(todos, many=True)
+# ->It takes a list of TodoModel objects.It converts them to Python native datatypes (like lists of dictionaries).So that it can be converted to JSON in the next step
+# many=True
+# --> By default, serializers are built to handle one object.But here, todos is a list of objects (a QuerySet).
+# return Response(serializer.data)
+# --> The front-end (React or Postman) will receive a list of tasks as JSON
+ 
+# post function
+# serializer.save(us_id = request.user)
+# -> Handles all ModelSerializer validations and save logic internally.
+# -> Triggers create() or update() methods automatically if overridden in the serializer.
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+# Step 12 -> refesh token
+
+# from rest_framework_simplejwt.views import TokenRefreshView
+# path('todo/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+# do it in rest client
+
+# if want to logout have to give access and refresh token
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+# STEP 13 -> task update
+
+# fetch the id from the frontend
+# fecth todo model by filtering id and and user
+
+# serializer = TodoSerializer(task, data = request.data, partial=True) 
+# ou might only want to update one or two fields
+# If partial=False (default): --> You must provide all required fields, or else it raises a validation error.
+# If partial=True: --> You can provide only the fields you want to update. Missing fields are ignored.
+
+# data=request.data
+# the data is updated todo task from the user
+
+# serializer.save()
+# The object already has us_id, just update fields
+
+# use PUT for rest client
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+# Step 14 -> task delete
+
+# fetch the id from the frontend
+# fecth todo model by filtering id and and user
+# task.delete()
+
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+# STEP 15 -> graph
+
+# fetch user from request.user
+# taken the count from completed and incompleted
+
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+# STEP 16 -> resentpasswordotp
+
+# get the email from the frontend
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+# =====================  REACT  ==========================
+
+
+# STEP 1 -> react setup
+
+# open terminal node -v
+# npm create vite@latest
+
+# install bootstrap and import in main.jsx
+# npm install react-bootstrap bootstrap
+# import 'bootstrap/dist/css/bootstrap.min.css';
+
+# npm install react-router-dom  
+# import { BrowserRouter as Router,Routes} from 'react-router-dom'
+
+# npm install axios 
+# import axios from 'axios'
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+# STEP 2 ->  register react
+
+# <input type="email" name="email" required />
+#  the required attribute is used on input fields to ensure that users do not leave the field empty before submitting the form.
+
+# created a const handlechange for onchange
+# created a function handlesubmit for onsubmit
+
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+

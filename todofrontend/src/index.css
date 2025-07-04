@@ -1,0 +1,85 @@
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  animation: spin 1s linear infinite;
+  margin-top: 200px;
+  margin-bottom: 200px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+body {
+  background: linear-gradient(to bottom right,
+      #f3e8ff,
+      #eff6ff,
+      #cffafe);
+  overflow-y: hidden;
+}
+
+input:focus {
+  box-shadow: none !important;
+}
+
+.total {
+  color: #000;
+}
+
+.active {
+  color: red;
+}
+
+.completed {
+  color: green;
+}
+
+.down {
+  background-color: #f1f6ff;
+}
+
+.percentage {
+  color: blue;
+}
+
+
+.todo {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+.todo1,
+.main-heading {
+  background: linear-gradient(to right, #7e22ce, #2563eb, #0891b2);
+  backdrop-filter: blur(4px);
+}
+
+.switch {
+  background: linear-gradient(to right, #8b5cf6, #ec4899);
+}
+
+.switch:hover {
+
+  background: linear-gradient(to right, #7c3aed, #db2777)
+}
+
+/* *{
+  border: 1px solid red;
+} */
+
+.link{
+  color:#9333ea;
+}
+
+.main{
+  height: 100%;
+}

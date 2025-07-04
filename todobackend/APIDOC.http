@@ -1,0 +1,147 @@
+
+# POST http://127.0.0.1:8000/api/todo/register/
+# Content-Type: application/json
+
+# {
+#     "username" : "abishek",
+#     "first_name" : "abishek",
+#     "last_name": "baiju",
+#     "email": "abishekbaiju2@gmail.com",
+#     "password": "poiuyt"
+# }
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+# POST http://127.0.0.1:8000/api/todo/resendotp/
+# Content-Type: application/json
+
+# {
+#     "email" : "abishekbaiju2@gmail.com"
+# }
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# POST http://127.0.0.1:8000/api/todo/verifyotp/
+# Content-Type: application/json
+
+# {
+#     "email" : "abishekbaiju2@gmail.com",
+#     "otp" : "9397"
+# }
+    
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# POST http://127.0.0.1:8000/api/todo/login/
+# Content-Type: application/json
+
+# {
+#     "email" : "abishekbaiju2@gmail.com",
+#     "password": "poiuyt"
+# }
+
+# {
+
+#   "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1MDUzODY1NywiaWF0IjoxNzQ5OTMzODU3LCJqdGkiOiI5NzA5OWQ0NTBlMDM0MmQ3YmI2OTU0ZjZhOGY2OGMxNSIsInVzZXJfaWQiOjF9.gSM82BLAfeyMnRb9sb_tKSQsX3PYRnhU8qSlq_sCJPI",
+#   "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5OTM0NDU3LCJpYXQiOjE3NDk5MzM4NTcsImp0aSI6IjdkZDUzYmVjYzgwYTRhMDdiNmQ2OTZhNWNhZTg5ZGU4IiwidXNlcl9pZCI6MX0.Zr0-6W3R1RWcRqLjd66yQtYkbaKiztngdStM2t2tWcM",
+#   "message": "Login successful"
+# }
+
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# POST http://127.0.0.1:8000/api/todo/forgetpasswordotp/
+# Content-Type: application/json
+
+# {
+#     "email" : "abishekbaiju2@gmail.com"     
+# }
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# POST http://127.0.0.1:8000/api/todo/resetpassword/
+# Content-Type: application/json
+
+# {
+#     "email" : "abishekbaiju2@gmail.com",
+#     "otp" : "7826",
+#     "new_password" : "poiuyt"
+# }
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# POST http://127.0.0.1:8000/api/todo/logout/
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5OTMwMjE4LCJpYXQiOjE3NDk5Mjk2MTgsImp0aSI6IjFmY2E2M2I3MWExNzRhZTU4NTc1ODQ4YTUzNTgwM2E0IiwidXNlcl9pZCI6MX0.jx3tOsGuQaGXqjWYGXNLKRx1jjqF3t-smpqxG7e9R8Y
+# Content-Type: application/json
+
+# {
+#   "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1MDUzNDQxOCwiaWF0IjoxNzQ5OTI5NjE4LCJqdGkiOiI3NjI3NGI1ZWJjNjc0MTIxOGZlYzE0MTk0MDFhNDFiYiIsInVzZXJfaWQiOjF9.6tYlQIEOntKoQnXyA533IePYBoACd4E0LEF7_FEz7sk"
+# }
+
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+# POST http://127.0.0.1:8000/api/todo/taskslistcreate/
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5OTMwNDY5LCJpYXQiOjE3NDk5Mjk4NjksImp0aSI6IjJlNmFjYmU5MGQ4YzQzOTBiZmI1MGI5YzAyNGFhMzJlIiwidXNlcl9pZCI6MX0.4VjRq12Y33oh1J5QEIWd8QMWmW7WhNXULAHXVX42DGU
+# Content-Type: application/json
+
+# {
+#   "title": "Task 1"
+# }
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+# GET  http://127.0.0.1:8000/api/todo/taskslistcreate/
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5OTMwNDY5LCJpYXQiOjE3NDk5Mjk4NjksImp0aSI6IjJlNmFjYmU5MGQ4YzQzOTBiZmI1MGI5YzAyNGFhMzJlIiwidXNlcl9pZCI6MX0.4VjRq12Y33oh1J5QEIWd8QMWmW7WhNXULAHXVX42DGU
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# POST http://127.0.0.1:8000/api/todo/token/refresh/
+# Content-Type: application/json
+
+# {
+#   "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1MDUzODY1NywiaWF0IjoxNzQ5OTMzODU3LCJqdGkiOiI5NzA5OWQ0NTBlMDM0MmQ3YmI2OTU0ZjZhOGY2OGMxNSIsInVzZXJfaWQiOjF9.gSM82BLAfeyMnRb9sb_tKSQsX3PYRnhU8qSlq_sCJPI"
+# }
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# PUT http://127.0.0.1:8000/api/todo/tasks/update/1/
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5OTMyODg3LCJpYXQiOjE3NDk5Mjk4NjksImp0aSI6IjI1NGUyYTA2Y2NkZDRlZDQ4YzIyMzJhZmExMzFkN2E0IiwidXNlcl9pZCI6MX0.mr-Z4okKL_xKl3pjMl8akT8y0SlWlz7eLdWz8c9r8_s
+# Content-Type: application/json
+
+# {
+#     "title": "Task 1 Updated"
+# }
+
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+# DELETE  http://127.0.0.1:8000/api/todo/tasks/delete/1/
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5OTMyODg3LCJpYXQiOjE3NDk5Mjk4NjksImp0aSI6IjI1NGUyYTA2Y2NkZDRlZDQ4YzIyMzJhZmExMzFkN2E0IiwidXNlcl9pZCI6MX0.mr-Z4okKL_xKl3pjMl8akT8y0SlWlz7eLdWz8c9r8_s
+# Content-Type: application/json
+
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# GET  http://127.0.0.1:8000/api/todo/tasks/stats/
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5OTM0NTA1LCJpYXQiOjE3NDk5MzM4NTcsImp0aSI6IjkzNjg1NGQ2NGQwMzQzODZhODFkZDllODFlZTdjZDNmIiwidXNlcl9pZCI6MX0.y8ASKuPB5yB3JNqAr07tFTeJQf6BFgle_KwFe2zNn_U
+
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+# POST http://127.0.0.1:8000/api/todo/resendpasswordotp/
+# Content-Type: application/json
+
+# {
+#     "email" : "abishekbaiju2@gmail.com"
+# }
+
+# -----------------------------------------------------------------------------------------------------------------------------------------
+
